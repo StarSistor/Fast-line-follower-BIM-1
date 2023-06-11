@@ -50,7 +50,7 @@ void setup() {
     qtr.calibrate();
     delay(10);
   }
-    digitalWrite(LED_BUILTIN, LOW); apaga el led Arduino para indicar termino de calibracion
+    digitalWrite(LED_BUILTIN, LOW); //apaga el led Arduino para indicar termino de calibracion
 }
 
 
@@ -87,24 +87,21 @@ int motorSpeedB = motorSpeed + controlSignal;
 motorSpeedA = constrain(motorSpeedA, 0, 255);
 motorSpeedB = constrain(motorSpeedB, 0, 255);
 
-// Control de motores
-if (controlSignal >2) {
-  //gira derecha
   digitalWrite(motorBInput1, LOW);
   digitalWrite(motorBInput2, HIGH);
   digitalWrite(motorAInput1, LOW);//LOW para avanzar hacia adelante
   digitalWrite(motorAInput2, HIGH);
   analogWrite(motorAPWM, motorSpeedA);
   analogWrite(motorBPWM, motorSpeedB);
-} 
-if (controlSignal < -2 ) {
-  // gira izquierda
-  digitalWrite(motorBInput1, LOW);
-  digitalWrite(motorBInput2, HIGH);
-  digitalWrite(motorAInput1, LOW);
-  digitalWrite(motorAInput2, HIGH); //LOW para avanzar hacia adelante
-  analogWrite(motorAPWM, motorSpeedA);
-  analogWrite(motorBPWM, motorSpeedB);
-}
+
+  // Update last error
+  lastError = error;
+  // Print sensor values and position to the serial monitor
+  for (int i = 0; i < NUM_SENSORS; i++) {
+    Serial.print(sensorValues[i]);
+    Serial.print('\t');
+
+ }
+    Serial.println(controlSignal); 
 
 }
